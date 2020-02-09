@@ -1,0 +1,10 @@
+[
+  {
+    "command": "ping",
+    "response": "Pong!"
+  },
+  {
+    "command": "website",
+    "response": "The club website is: https://bayview.club/ :tada:"
+  }
+]
