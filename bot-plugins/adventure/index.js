@@ -7,12 +7,11 @@ const stripAnsi = require('strip-ansi');
 
 // BSSCC Bot
 let emulator;
-let responseChannel = "";
+let responseChannel = null;
 let booted = false;
 
 async function startLinux() {
-    function readfile(path)
-    {
+    function readfile(path) {
         return new Uint8Array(fs.readFileSync(path)).buffer;
     }
 
@@ -35,7 +34,7 @@ async function startLinux() {
     {
         if(!booted)
         {
-            var now = Date.now();
+            let now = Date.now();
             let bootTime = now - boot_start;
             console.log("-> Linux Subsystem Started! Took " + bootTime +"ms to boot.");
             booted = true;
@@ -44,17 +43,33 @@ async function startLinux() {
             emulator.serial0_send("root\u000a");
         }
 
-        if(responseChannel === "") {
+        if(responseChannel === null) {
             // No channel to send yet
             return;
         }
 
         char_buffer = char_buffer + chr;
 
-        if(chr === "\u000a" || chr === "\u003a" || chr === "\u0025") {
+        /*if(chr === "\u000a" || chr === "\u003a" || chr === "\u0025") {
             responseChannel.send(stripAnsi(char_buffer));
             char_buffer = "";
+        }*/
+
+        // Keep filling the buffer until we are returned to a prompt
+        function sendBuffer() {
+            //console.log(stripAnsi(char_buffer));
+            let chunkedResponse = stripAnsi(char_buffer).match(/(.|[\r\n]){1,2000}/g);
+            for(let i = 0; i < chunkedResponse.length; i++) {
+                responseChannel.send(chunkedResponse[i]);
+            }
+            char_buffer = "";
         }
+
+        // todo handle infinite loops (ex. "yes" command)
+        if(char_buffer.includes("root%")) {
+            sendBuffer();
+        }
+
     });
 }
 async function init(client, cm, ap) {
@@ -90,14 +105,6 @@ async function init(client, cm, ap) {
             "command": "ctrlc",
             "handler": (msg) => {
                 emulator.serial0_send("\u0003");
-            }
-        }
-    );
-    cm.push(
-        {
-            "command": "stop-emu",
-            "handler": (msg) => {
-                emulator.stop();
             }
         }
     );
