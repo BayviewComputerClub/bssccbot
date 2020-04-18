@@ -23,6 +23,10 @@ CHAT_LOG_CHANNEL=channel id (where to log messages to)
 CHAT_BOT_CHANNEL=channel id (where to run the chat bot)
 ```
 
+### Docker
+A Docker image is available at: https://hub.docker.com/repository/docker/bsscc/bot
+Be sure to set the environment variables!
+
 ### Plugin Documentation:
 
 Plugins consist of a folder in the bot-plugins directory, and an index.js file containing an init function.
