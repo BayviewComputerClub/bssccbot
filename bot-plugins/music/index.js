@@ -1,6 +1,7 @@
 /* Music Bot  */
 const ytdl = require('ytdl-core');
-const { getInfo } = require('ytdl-getinfo');
+//const { getInfo } = require('ytdl-getinfo');
+const ytsr = require('ytsr');
 
 let isPlaying = false;
 
@@ -31,9 +32,13 @@ function init(client, cm, ap) {
                         return;
                     }
                     await msg.reply("Connected :tada:... Please wait...");
-                    let ytResults = await getInfo(search[1]);
-                    console.log("Playing " + ytResults.items[0].title + " ==> id " + ytResults.items[0].id);
-                    let dispatcher = conn.playStream(ytdl("https://youtube.com/watch?v=" + ytResults.items[0].id, { quality: "highestaudio", filter: 'audioonly' }));
+                    //let ytResults = await getInfo(search[1]);
+
+                    let ytResults = await ytsr(search[1]);
+                    let result = ytResults.items[0];
+
+                    console.log("Playing " + result.title + " ==> " + result.link);
+                    let dispatcher = conn.playStream(ytdl(result.link, { quality: "highestaudio", filter: 'audioonly' }));
                     dispatcher.setVolume(0.5);
                     dispatcher.setBitrate("auto");
                     await msg.reply("Playing your song (" + ytResults.items[0].title + ")! :musical_note: ");

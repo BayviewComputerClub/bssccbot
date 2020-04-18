@@ -5,14 +5,13 @@ This is the bot for the Bayview Computer Club's Discord Server.
 
 > Warning: The code is a complete disaster and you shouldn't use this.
 
-
 ### Features
 
 * Linux emulation (run Linux commands using "!linux [cmd]"). Uses [v86](https://github.com/copy/v86).
-* Music Bot (run "!play [song name]" while in a VC. I think this is broken right now)
+* Music Bot (run "!play [song name]" while in a VC. This kinda works)
 * Chat Bot (Uses [nlp.js](https://github.com/axa-group/nlp.js) with a supplied corpus file)
 * Chat Logging (Logs all messages to a specified log channel)
-* Some other stuff (like !joke)
+* Some other stuff (like !joke and !fry)
 
 ### Environment Variables
 The bot needs the following environment variables set:
@@ -31,7 +30,7 @@ Be sure to set the environment variables!
 
 Plugins consist of a folder in the bot-plugins directory, and an index.js file containing an init function.
 
-** This plugin uses DiscordJS v11, make sure you are reading the correct documentation! **
+**This plugin uses DiscordJS v11, make sure you are reading the correct documentation!**
 
 Plugin Template:
 ```javascript
