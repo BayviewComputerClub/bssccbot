@@ -73,7 +73,6 @@ async function startLinux() {
     });
 }
 async function init(client, cm, ap) {
-
     // Start Linux
     await startLinux();
 
@@ -115,7 +114,7 @@ async function init(client, cm, ap) {
                 msg.reply(`
                 ~ BSSCCBot Linux Subsystem ~
                 Dr. Smoothie runs a simple embedded Linux distro in a VM.
-                
+
                 Simply run "!linux" followed by the command (ex. !linux ls)
                 `)
             }

@@ -2,11 +2,18 @@
 const ytdl = require('ytdl-core');
 const { getInfo } = require('ytdl-getinfo');
 
+let isPlaying = false;
+
 function init(client, cm, ap) {
     cm.push(
         {
             "command": "play",
             "handler": async (msg) => {
+                if(isPlaying) {
+                    await msg.reply("Something is playing! You need to stop the player first, or wait for this song to end...");
+                    return;
+                }
+                isPlaying = true;
                 try{
                     let vc = msg.member.voiceChannel;
                     let conn;
@@ -45,6 +52,7 @@ function init(client, cm, ap) {
                 let vc = msg.member.voiceChannel;
                 await vc.leave();
                 await msg.reply("The party's over! :wave:");
+                isPlaying = false;
             }
         }
     );

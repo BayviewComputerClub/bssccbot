@@ -27,6 +27,8 @@ CHAT_BOT_CHANNEL=channel id (where to run the chat bot)
 
 Plugins consist of a folder in the bot-plugins directory, and an index.js file containing an init function.
 
+** This plugin uses DiscordJS v11, make sure you are reading the correct documentation! **
+
 Plugin Template:
 ```javascript
 function init(client, cm, ap) {
@@ -36,7 +38,7 @@ function init(client, cm, ap) {
 module.exports = init;
 
 ```
-client -> the instance of the [DiscordJS Client](https://discord.js.org/#/docs/main/stable/class/Client).
+client -> the instance of the [DiscordJS Client](https://discord.js.org/#/docs/main/v11/class/Client).
 
 cm -> the Command Mapping object
 

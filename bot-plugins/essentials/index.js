@@ -46,6 +46,15 @@ function init(client, cm, ap) {
             }
         }
     );
+    cm.push(
+        {
+            "command": "restart",
+            "handler": async (msg) => {
+                await msg.reply("Goodbye...");
+                process.exit(0);
+            }
+        }
+    );
 
 }
 

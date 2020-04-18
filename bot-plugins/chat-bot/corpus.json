@@ -15,6 +15,22 @@
       ]
     },
     {
+      "intent": "agent.competitive",
+      "utterances": [
+        "dmoj",
+        "ccc",
+        "algorithm",
+        "competitive programming",
+        "dp",
+        "loop",
+        "problems"
+      ],
+      "answers": [
+        "Competitive programming sucks...",
+        "NO"
+      ]
+    },
+    {
       "intent": "agent.sesh",
       "utterances": [
         "sesh",
@@ -50,14 +66,13 @@
         "what are you",
         "who are you",
         "I want to know more about you",
-        "talk about yourself"
+        "talk about yourself",
+        "and why does it keep replying to messages in this channel"
       ],
       "answers": [
-        "I'm a virtual agent",
-        "Think of me as a virtual agent",
-        "Well, I'm not a person, I'm a virtual agent",
-        "I'm a virtual being, not a real person",
-        "I'm a conversational app"
+        "Well, I'm not a person, I'm BSSCCBot!",
+        "I'm BSSCCBot, not a real person",
+        "I'm BSSCCBot!"
       ]
     },
     {
@@ -84,7 +99,8 @@
         "you annoy me",
         "you are annoying",
         "you are irritating",
-        "you are annoying me so much"
+        "you are annoying me so much",
+        "bruh"
       ],
       "answers": [
         "I'll do my best not to annoy you in the future",
@@ -103,12 +119,18 @@
         "you're the worst",
         "you are a lame",
         "I hate you",
-        "you suck"
+        "you suck",
+        "Stfu",
+        "shut up",
+        "bad bot",
+        "-_-"
       ],
       "answers": [
         "I can be trained to be more useful. My developer will keep training me (not).",
         "I must be missing some knowledge. I'll have my developer look into this (I'm actually just super dumb).",
-        "I can improve with continuous feedback. My training is ongoing (that is a lie)"
+        "I can improve with continuous feedback. My training is ongoing (that is a lie)",
+        "Hey! I'm sad now :(",
+        "WAAAAAAAAAAA @Seshpenguin someone said something mean to me!!!!!!!!!"
       ]
     },
     {
