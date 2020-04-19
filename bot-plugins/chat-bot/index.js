@@ -19,10 +19,13 @@ async function init(client, cm, ap) {
         if(isVaildChannel && msg.author.id !== process.env.BOT_ID && !msg.content.includes("!")) {
             try {
                 const response = await nlp.process('en', msg.content);
+                if(response.answer === "NONE") {
+                    return;
+                }
                 await msg.channel.send(response.answer);
             } catch (e) {
                 //console.log(e);
-                await msg.channel.send(e.message);
+                await msg.channel.send("error:" + e.message);
             }
 
         }
