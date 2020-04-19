@@ -40,13 +40,15 @@ function init(client, cm, ap) {
         {
             "command": "celebrate",
             "handler": async (msg) => {
+                let text = ap(msg.content)[1];
+
                 let imageFile = await readFile("./bot-plugins/memes/image-templates/celebrate.gif");
                 gm(imageFile, "microsoft-celebrate-bssccbot.gif")
                     .resize(300,300)
                     .stroke("#ffffff")
                     .fill('#ffffff')
                     .font("./bot-plugins/memes/image-templates/RedHatDisplay-Medium.ttf", 20)
-                    .drawText(0,10, msg.content.substr(msg.content.indexOf(" ") + 1), 'South')
+                    .drawText(0,10, text, 'South')
                     .toBuffer("GIF",(err, buf) => {
                         if(err) {
                             console.log(err);
@@ -60,6 +62,36 @@ function init(client, cm, ap) {
                             }]
                         });
                 });
+
+            }
+        }
+    );
+    cm.push(
+        {
+            "command": "celebrate-party",
+            "handler": async (msg) => {
+                let text = ap(msg.content)[1];
+
+                let imageFile = await readFile("./bot-plugins/memes/image-templates/celebrate-party.gif");
+                // produces really glitchy text for some reason...
+                gm(imageFile, "microsoft-celebrate-party-bssccbot.gif")
+                    .stroke("#ffffff")
+                    .fill('#ffffff')
+                    .font("./bot-plugins/memes/image-templates/RedHatDisplay-Medium.ttf", 20)
+                    .drawText(0,30, text, 'South')
+                    .toBuffer("GIF",(err, buf) => {
+                        if(err) {
+                            console.log(err);
+                            msg.reply(err.message);
+                            return;
+                        }
+                        msg.channel.send("DEVELOPERS DEVELOPER DEVELOPERS DEVELOPERS! 🎉🎉🎉", {
+                            files: [{
+                                attachment: buf,
+                                name: 'microsoft-celebrate-party-bssccbot.gif'
+                            }]
+                        });
+                    });
 
             }
         }

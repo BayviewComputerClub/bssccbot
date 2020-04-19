@@ -1,5 +1,8 @@
-let axios = require("axios");
-var os = require('os');
+const axios = require("axios");
+const os = require('os');
+
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -7,16 +10,44 @@ function getRandomInt(max) {
 
 function init(client, cm, ap) {
     cm.push(
-    {
-        "command": "joke",
-        "handler": async (msg) => {
-            axios.defaults.headers = {
-                'Accept': 'text/plain',
-            };
-            const response = await axios.get('https://icanhazdadjoke.com/');
-            await msg.reply(response.data);
+        {
+            "command": "joke",
+            "handler": async (msg) => {
+                axios.defaults.headers = {
+                    'Accept': 'text/plain',
+                };
+                const response = await axios.get('https://icanhazdadjoke.com/');
+                await msg.reply(response.data);
+            }
         }
-    }
+    );
+    cm.push(
+        {
+            "command": "fortune",
+            "handler": async (msg) => {
+                try {
+                    const { stdout } = await exec('fortune');
+                    await msg.channel.send(stdout);
+                } catch (e) {
+                    await msg.channel.send(e.message);
+                }
+            }
+        }
+    );
+    cm.push(
+        {
+            "command": "cowsay",
+            "handler": async (msg) => {
+                let text = ap(msg.content)[1].replace(/(\r\n|\n|\r)/gm,"");
+
+                try {
+                    const { stdout } = await exec('cowsay ' + text);
+                    await msg.channel.send("```bash\n" + stdout + "```");
+                } catch (e) {
+                    await msg.channel.send(e.message);
+                }
+            }
+        }
     );
     cm.push(
         {

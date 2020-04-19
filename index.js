@@ -17,7 +17,6 @@ function argumentParser(msg) {
     return [msg.substr(0, msg.indexOf(' ')), msg.substr(msg.indexOf(' ')+1)];
 }
 
-
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
 

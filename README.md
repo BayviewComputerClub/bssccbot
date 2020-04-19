@@ -47,7 +47,6 @@ cm -> the Command Mapping object
 
 ap -> argumentParser() helper utility.
 
-
 To register a command:
 ```javascript
 cm.push(
@@ -61,3 +60,9 @@ cm.push(
 ```
 Command is the command **without** the prefix. Handler is a function that is 
 called when the command is invoked (with [message object](https://discord.js.org/#/docs/main/stable/class/Message) passed to it).
+
+#### Argument Parser
+The ap() function will return the command at index 0, and the rest of the text at index 1.
+```javascript
+let text = ap(msg.content)[1];
+```

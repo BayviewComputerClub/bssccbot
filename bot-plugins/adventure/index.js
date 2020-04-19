@@ -16,7 +16,7 @@ async function startLinux() {
     }
 
     let bios = readfile(__dirname + "/bios/seabios.bin");
-    let linux = readfile(__dirname + "/image/linux.iso");
+    let linux = readfile(__dirname + "/image/linux4.iso");
 
     let boot_start = Date.now();
 
@@ -48,6 +48,7 @@ async function startLinux() {
             return;
         }
 
+
         char_buffer = char_buffer + chr;
 
         /*if(chr === "\u000a" || chr === "\u003a" || chr === "\u0025") {
@@ -66,12 +67,20 @@ async function startLinux() {
         }
 
         // todo handle infinite loops (ex. "yes" command)
-        if(char_buffer.includes("root%")) {
+        if(char_buffer.includes("%")) {
             sendBuffer();
+        }
+
+        if(char_buffer.length > 1024) {
+            // probably in a infinite loop (like "yes" or something)
+            char_buffer = "";
+            emulator.serial0_send("\x03");
+            responseChannel.send("Output buffer limit exceeded!");
         }
 
     });
 }
+
 async function init(client, cm, ap) {
     // Start Linux
     await startLinux();
@@ -82,6 +91,12 @@ async function init(client, cm, ap) {
             "handler": (msg) => {
                 if(!booted) {
                     msg.reply("Linux is still booting... :man_running:");
+                    return;
+                }
+
+                // no top for you
+                if(msg.content.includes("top") || msg.content.includes("nano") || msg.content.includes("vi") || msg.content.includes("vim")) {
+                    emulator.serial0_send("\u000a");
                     return;
                 }
 
@@ -103,7 +118,7 @@ async function init(client, cm, ap) {
         {
             "command": "ctrlc",
             "handler": (msg) => {
-                emulator.serial0_send("\u0003");
+                emulator.serial0_send("\x03");
             }
         }
     );
