@@ -22,7 +22,7 @@ function init(client, cm, ap) {
                 };
                 const response = await axios.get('https://dmoj.ca/api/problem/list');
                 let problem = randomProperty(response.data);
-                await msg.reply("Why not try out **" + problem.info.name + "** for " + problem.info.points + " points?" + "\n" +
+                await msg.channel.send("Why not try out **" + problem.info.name + "** for " + problem.info.points + " points?" + "\n" +
                     "https://dmoj.ca/problem/" + problem.id
                 );
             }
