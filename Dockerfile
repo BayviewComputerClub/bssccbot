@@ -5,6 +5,8 @@ WORKDIR /usr/src/app
 RUN apt-get update -y
 RUN apt-get install ffmpeg graphicsmagick fortune cowsay -y
 
+ENV PATH="/usr/games:${PATH}"
+
 COPY package*.json ./
 RUN npm ci
 
