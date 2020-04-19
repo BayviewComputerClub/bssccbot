@@ -1,4 +1,8 @@
-let Jimp = require("jimp");
+const Jimp = require("jimp");
+const fs = require('fs');
+const gm = require("gm");
+const util = require('util');
+const readFile = util.promisify(fs.readFile);
 
 function init(client, cm, ap) {
     cm.push(
@@ -27,6 +31,34 @@ function init(client, cm, ap) {
                         attachment: imgBuf,
                         name: 'fried-image-bssccbot.jpg'
                     }]
+                });
+
+            }
+        }
+    );
+    cm.push(
+        {
+            "command": "celebrate",
+            "handler": async (msg) => {
+                let imageFile = await readFile("./bot-plugins/memes/image-templates/celebrate.gif");
+                gm(imageFile, "microsoft-celebrate-bssccbot.gif")
+                    .resize(300,300)
+                    .stroke("#ffffff")
+                    .fill('#ffffff')
+                    .font("./bot-plugins/memes/image-templates/RedHatDisplay-Medium.ttf", 20)
+                    .drawText(0,10, msg.content.substr(msg.content.indexOf(" ") + 1), 'South')
+                    .toBuffer("GIF",(err, buf) => {
+                        if(err) {
+                            console.log(err);
+                            msg.reply(err.message);
+                            return;
+                        }
+                        msg.channel.send("Woo! 🎉🎉🎉", {
+                            files: [{
+                                attachment: buf,
+                                name: 'microsoft-celebrate-bssccbot.gif'
+                            }]
+                        });
                 });
 
             }

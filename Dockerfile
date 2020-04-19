@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 
 # Install dependancies first.
 RUN apt-get update -y
-RUN apt-get install ffmpeg -y
+RUN apt-get install ffmpeg graphicsmagick -y
 
 COPY package*.json ./
 RUN npm ci

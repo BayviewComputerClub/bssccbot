@@ -11,6 +11,7 @@
     "discord.js": "^11.6.4",
     "dotenv": "^8.2.0",
     "erlpack": "github:hammerandchisel/erlpack",
+    "gm": "^1.23.1",
     "jimp": "^0.10.0",
     "libsodium-wrappers": "^0.7.6",
     "strip-ansi": "^6.0.0",
