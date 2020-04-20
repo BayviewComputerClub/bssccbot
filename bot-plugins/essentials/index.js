@@ -71,6 +71,15 @@ function init(client, cm, ap) {
     );
     cm.push(
         {
+            "command": "clear",
+            "handler": (msg) => {
+                let clearMsg = "\n";
+                msg.channel.send("." + clearMsg.repeat(1000) + "All Clean :smile:"); // 1-6
+            }
+        }
+    );
+    cm.push(
+        {
             "command": "info",
             "handler": (msg) => {
                 msg.reply("I am running Node " + process.version + " on " + os.platform() + " " + os.release());

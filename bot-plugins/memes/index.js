@@ -4,6 +4,8 @@ const gm = require("gm");
 const util = require('util');
 const readFile = util.promisify(fs.readFile);
 
+let font = "unifont-13.0.01.ttf";
+
 function init(client, cm, ap) {
     cm.push(
         {
@@ -47,7 +49,7 @@ function init(client, cm, ap) {
                     .resize(300,300)
                     .stroke("#ffffff")
                     .fill('#ffffff')
-                    .font("./bot-plugins/memes/image-templates/RedHatDisplay-Medium.ttf", 20)
+                    .font("./bot-plugins/memes/image-templates/" + font, 20)
                     .drawText(0,10, text, 'South')
                     .toBuffer("GIF",(err, buf) => {
                         if(err) {
@@ -77,7 +79,7 @@ function init(client, cm, ap) {
                 gm(imageFile, "microsoft-celebrate-party-bssccbot.gif")
                     .stroke("#ffffff")
                     .fill('#ffffff')
-                    .font("./bot-plugins/memes/image-templates/RedHatDisplay-Medium.ttf", 20)
+                    .font("./bot-plugins/memes/image-templates/" + font, 20)
                     .drawText(0,30, text, 'South')
                     .toBuffer("GIF",(err, buf) => {
                         if(err) {
