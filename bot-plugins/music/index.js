@@ -11,7 +11,7 @@ function init(client, cm, ap) {
             "command": "play",
             "handler": async (msg) => {
                 if(isPlaying) {
-                    await msg.reply("Something is playing! You need to stop the player first, or wait for this song to end...");
+                    await msg.reply("Something is playing (or I broke)! You need to stop the player first, use '!stop'.");
                     return;
                 }
                 isPlaying = true;

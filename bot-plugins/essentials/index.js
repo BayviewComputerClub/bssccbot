@@ -51,6 +51,41 @@ function init(client, cm, ap) {
     );
     cm.push(
         {
+            "command": "xkcd",
+            "handler": async (msg) => {
+                let args = ap(msg.content);
+                try {
+                    if(args[0] === "") {
+                        // Get random comic
+                        // Get the latest comic to determine the ID upper bounds
+                        const maxID = (await axios.get('https://xkcd.com/info.0.json')).data.num;
+                        let id = getRandomInt(maxID);
+                        const comic = (await axios.get('https://xkcd.com/' + id + '/info.0.json')).data;
+                        msg.channel.send(`XKCD ${id} - ${comic.title}\n${comic.img}`);
+                        msg.channel.send("> " + comic.alt);
+
+                    } else if(args[1].toLowerCase() === "latest") {
+                        // Get latest comic
+                        const comic = (await axios.get('https://xkcd.com/info.0.json')).data;
+                        msg.channel.send(`XKCD ${comic.num} - ${comic.title}\n${comic.img}`);
+                        msg.channel.send("> " + comic.alt);
+                    } else {
+                        let comicID = args[1];
+                        const comic = (await axios.get('https://xkcd.com/' + comicID + '/info.0.json')).data;
+                        msg.channel.send(`XKCD ${comicID} - ${comic.title}\n${comic.img}`);
+                        msg.channel.send("> " + comic.alt);
+                    }
+                } catch (e) {
+                    msg.channel.send("Could not get comic!");
+                    msg.channel.send(e.message);
+                    console.log(e);
+                }
+
+            }
+        }
+    );
+    cm.push(
+        {
             "command": "roll",
             "handler": (msg) => {
                 msg.reply(getRandomInt(5) + 1); // 1-6
