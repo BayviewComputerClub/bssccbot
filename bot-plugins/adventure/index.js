@@ -71,7 +71,7 @@ async function startLinux() {
             sendBuffer();
         }
 
-        if(char_buffer.length > 1024) {
+        if(char_buffer.length > 10000) {
             // probably in a infinite loop (like "yes" or something)
             char_buffer = "";
             emulator.serial0_send("\x03");
