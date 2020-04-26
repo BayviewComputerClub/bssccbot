@@ -11,7 +11,9 @@ This is the bot for the Bayview Computer Club's Discord Server.
 * Music Bot (run "!play [song name]" while in a VC. This kinda works)
 * Chat Bot (Uses [nlp.js](https://github.com/axa-group/nlp.js) with a supplied corpus file)
 * Chat Logging (Logs all messages to a specified log channel)
-* Some other stuff (like !joke and !fry)
+* !xkcd for XKCD comics, !joke for a dad joke
+* !dmoj-problem and !dmoj-user [username]
+* Meme things (!fry @User, !celebrate [text] !celebrate-party [text]);
 
 ### Environment Variables
 The bot needs the following environment variables set:

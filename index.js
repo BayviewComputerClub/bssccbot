@@ -28,7 +28,6 @@ client.on('message', msg => {
     mapCommand(msg);
 });
 
-
 client.login(process.env.BOT_TOKEN).then(r => {});
 
 // Load Plugins
