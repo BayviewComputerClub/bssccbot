@@ -7,7 +7,7 @@ print('Loading BSSCCBot Chat Python Script...')
 
 chatbot = ChatBot('Dr. Smoothie')
 
-with open('discord_chat_training.json', 'r') as f:
+with open('discord_chat_training.json', 'r+', encoding="utf-8") as f:
     array = json.load(f)
 
 # Create a new trainer for the chatbot
