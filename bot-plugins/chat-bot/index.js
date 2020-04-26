@@ -64,14 +64,14 @@ async function init(client, cm, ap) {
     // Bind script output to bot channel.
     bot.stdout.on('data', async (data) => {
         //console.log(data);
-        if(data.toString().includes("%")) {
+        if(data.toString().includes("%") || data.toString().includes("[") || data.toString().includes("@")) {
             // We don't need boot progress...;
             return;
         }
         client.channels.get(process.env.CHAT_BOT_CHANNEL).send(data.toString().replace("@", "-"));
     });
     bot.stderr.on('data', async (data) => {
-        //console.log(data);
+        console.log(data.toString());
         try {
             client.channels.get(process.env.CHAT_BOT_CHANNEL).send(data.toString());
         } catch(e) {
@@ -79,9 +79,11 @@ async function init(client, cm, ap) {
         }
 
     });
-    bot.on('close', (code) => {
+    bot.on('close', async (code) => {
         console.log(`Python Bot exited with code ${code}`);
-        client.channels.get(process.env.CHAT_BOT_CHANNEL).send("Chat Bot crashed with " + code + " :frowning: ");
+        await client.channels.get(process.env.CHAT_BOT_CHANNEL).send("Chat Bot crashed with " + code + " :frowning: ");
+        await client.channels.get(process.env.CHAT_BOT_CHANNEL).send("Hold on... I am restarting :recycle:");
+        process.exit(code);
     });
 
     //let nlp = await initNLP();
