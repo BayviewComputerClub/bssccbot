@@ -121,24 +121,25 @@ function init(client, cm, ap) {
             }
         }
     );
-
-    async function restartBot() {
-        // Docker will start the process again.
-        await msg.reply("Goodbye...");
-        process.exit(0);
-    }
     cm.push(
         {
             "command": "restart",
-            "handler": async (msg) => {await restartBot();}
+            "handler": async (msg) => {
+                await msg.reply("Goodbye...");
+                process.exit(0);
+            }
         }
     );
     cm.push(
         {
             "command": "die",
-            "handler": async (msg) => {await restartBot();}
+            "handler": async (msg) => {
+                await msg.reply("Goodbye...");
+                process.exit(0);
+            }
         }
     );
+
 
 }
 
