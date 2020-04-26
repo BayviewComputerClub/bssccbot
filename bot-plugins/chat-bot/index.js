@@ -77,7 +77,13 @@ async function init(client, cm, ap) {
             // We don't need boot progress...;
             return;
         }
-        client.channels.get(process.env.CHAT_BOT_CHANNEL).send(data.toString().replace("@", "-"));
+        try {
+            client.channels.get(process.env.CHAT_BOT_CHANNEL).send(data.toString().replace("@", "-"));
+        } catch(e) {
+            console.log(e);
+            client.channels.get(process.env.CHAT_BOT_CHANNEL).send(e.message);
+        }
+
     });
     bot.stderr.on('data', async (data) => {
         console.log(data.toString());
