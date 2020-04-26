@@ -11,6 +11,7 @@
     "csv-parser": "^2.3.2",
     "discord.js": "^11.6.4",
     "dotenv": "^8.2.0",
+    "emoji-text": "^0.2.6",
     "erlpack": "github:hammerandchisel/erlpack",
     "gm": "^1.23.1",
     "jimp": "^0.10.0",

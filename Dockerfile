@@ -9,6 +9,7 @@ ENV PATH="/usr/games:${PATH}"
 
 RUN pip3 install chatterbot
 RUN pip3 install chatterbot_corpus
+RUN pip3 install emoji
 
 COPY package*.json ./
 RUN npm ci

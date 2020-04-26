@@ -1,6 +1,7 @@
 const { dockStart } = require('@nlpjs/basic');
 const fs = require('fs');
 const spawn = require("child_process").spawn;
+const emojiText = require("emoji-text");
 
 async function initNLP() {
     console.log("    -> Training Chat Bot...");
@@ -40,7 +41,15 @@ async function init(client, cm, ap) {
                     let messages = await trainingChannel.fetchMessages({ limit: 100 });
                     for(let message of messages) {
                         //console.log(message[1].content);
-                        discordMessagesArr.push(message[1].content.replace("@", "-"))
+
+                        discordMessagesArr.push(
+                            emojiText.convert(
+                                message[1].content.replace("@", "-"),
+                                {
+                                    delimiter: ':'
+                                }
+                            )
+                        );
                     }
                 }
             }
@@ -72,6 +81,10 @@ async function init(client, cm, ap) {
     });
     bot.stderr.on('data', async (data) => {
         console.log(data.toString());
+        if(data.toString().includes("%") || data.toString().includes("[") || data.toString().includes("@")) {
+            // We don't need boot progress...;
+            return;
+        }
         try {
             client.channels.get(process.env.CHAT_BOT_CHANNEL).send(data.toString());
         } catch(e) {

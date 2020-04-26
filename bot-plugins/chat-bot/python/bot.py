@@ -2,6 +2,7 @@ from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
 from chatterbot.trainers import ListTrainer
 import json
+import emoji
 
 print('Loading BSSCCBot Chat Python Script...')
 
@@ -23,4 +24,5 @@ print('Done training!')
 # Get a response to an input statement
 while True:
     msg = input()
-    print(chatbot.get_response(msg))
+    # the encode decode stuff just removes emoji and unicode stuff to make python shut up
+    print(chatbot.get_response(emoji.demojize(msg)))
