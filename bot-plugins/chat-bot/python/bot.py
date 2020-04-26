@@ -20,7 +20,7 @@ trainer.train("chatterbot.corpus.english")
 # Train based on the Discord messages
 listtrainer.train(array)
 
-print('Done training!')
+print('The chat bot is now running! :tada:')
 # Get a response to an input statement
 while True:
     msg = input()
