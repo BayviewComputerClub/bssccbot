@@ -38,6 +38,10 @@ async function init(client, cm, ap) {
                 if(channel[1].type === "text") {
                     console.log(channel[1].id);
                     let trainingChannel = client.channels.get(channel[1].id);
+                    if(trainingChannel === process.env.CHAT_BOT_CHANNEL) {
+                        // Don't train from the chat bot channel
+                        continue;
+                    }
                     let messages = await trainingChannel.fetchMessages({ limit: 100 });
                     for(let message of messages) {
                         //console.log(message[1].content);
@@ -118,7 +122,7 @@ async function init(client, cm, ap) {
                     return;
                 }
                 await msg.channel.send(response.answer);*/
-                if(msg.content === "") {
+                if(msg.content === "" || msg.content.includes("pls")) { // also ignore dank memer commands
                     return;
                 }
                 bot.stdin.write(msg.content + "\r\n");
