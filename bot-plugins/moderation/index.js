@@ -28,15 +28,18 @@ async function init(client, cm, ap) {
             // Check if user has permission.
             await createUserIfNotExists(msg.author.id);
 
-            let isAdmin = (await pool.request()
-                .input("user_id", msg.author.id)
-                .query("SELECT is_admin FROM users WHERE user_id = @user_id"))
-                .recordset[0]
-                .is_admin;
-            if(!isAdmin || msg.author.id !== process.env.MOD_ADMIN_ID) {
-                msg.reply(":exclamation: You are not an admin!");
-                return;
+            if(msg.author.id !== process.env.MOD_ADMIN_ID) {
+                let isAdmin = (await pool.request()
+                    .input("user_id", msg.author.id)
+                    .query("SELECT is_admin FROM users WHERE user_id = @user_id"))
+                    .recordset[0]
+                    .is_admin;
+                if(!isAdmin) {
+                    msg.reply(":exclamation: You are not an admin!");
+                    return;
+                }
             }
+
 
             if(ap(msg.content)[0] === "") {
                 msg.reply(`Please specify a subcommand:

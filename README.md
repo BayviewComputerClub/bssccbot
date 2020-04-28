@@ -41,7 +41,9 @@ will automatically setup a BSSCCBot container and MS SQL Server container, linke
 
 First create a "docker.env" file with the above environment variables set (EXCLUDING SQL_*).
 
-Then run `docker-compose up` to deploy to docker! 
+Then run `docker-compose pull && docker-compose up --no-start` to create the containers.
+
+Finally, start the bssccbot-mssql container, what for it to startup, then start the bssccbot container.
 
 ### Plugin Documentation:
 
