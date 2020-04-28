@@ -138,10 +138,12 @@ async function init(client, cm, ap) {
             await msg.channel.send("**Top 5 Users with the Most Messages Sent (Since I Started Counting)**");
             let topUsers = (await pool.request()
                 .query("SELECT TOP 5 * FROM users ORDER BY num_messages DESC")).recordset;
+            let resultMsg = "";
             for(let user of topUsers) {
                 let userObj = await client.fetchUser(user.user_id);
-                await msg.channel.send("- " + userObj.username + " (" + user.num_messages +" messages)");
+                resultMsg = resultMsg + "- " + userObj.username + " (" + user.num_messages +" messages)\n"
             }
+            await msg.channel.send(resultMsg);
             //console.log(topUsers);
         }
     });
