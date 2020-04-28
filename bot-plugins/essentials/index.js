@@ -132,6 +132,19 @@ async function init(client, cm, ap) {
 
         }
     });
+    cm.push({
+        "command": "stats-top",
+        "handler": async (msg) => {
+            await msg.channel.send("**Top 5 Users with the Most Messages Sent (Since I Started Counting)**");
+            let topUsers = (await pool.request()
+                .query("SELECT TOP 5 * FROM users ORDER BY num_messages DESC")).recordset;
+            for(let user of topUsers) {
+                let userObj = await client.fetchUser(user.user_id);
+                await msg.channel.send("- " + userObj.username + " (" + user.num_messages +" messages)");
+            }
+            //console.log(topUsers);
+        }
+    });
     cm.push(
         {
             "command": "clear",

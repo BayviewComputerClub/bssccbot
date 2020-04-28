@@ -70,7 +70,7 @@ To register a command:
 ```javascript
 cm.push({
     "command": "",
-    "handler": (msg) => {
+    "handler": async (msg) => {
 
     }
 });
