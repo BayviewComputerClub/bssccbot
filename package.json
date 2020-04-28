@@ -5,7 +5,6 @@
   "main": "index.js",
   "dependencies": {
     "@discordjs/opus": "^0.1.0",
-    "@nlpjs/basic": "^4.0.2",
     "axios": "^0.19.0",
     "bufferutil": "^4.0.1",
     "csv-parser": "^2.3.2",
@@ -16,6 +15,7 @@
     "gm": "^1.23.1",
     "jimp": "^0.10.0",
     "libsodium-wrappers": "^0.7.6",
+    "mssql": "^6.2.0",
     "strip-ansi": "^6.0.0",
     "ytdl-core": "^2.1.0",
     "ytsr": "^0.1.12"

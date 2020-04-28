@@ -1,18 +1,12 @@
-const { dockStart } = require('@nlpjs/basic');
 const fs = require('fs');
 const spawn = require("child_process").spawn;
 const emojiText = require("emoji-text");
 
-async function initNLP() {
-    console.log("    -> Training Chat Bot...");
-    const dock = await dockStart({ use: ['Basic']});
-    const nlp = dock.get('nlp');
-    await nlp.addCorpus('./bot-plugins/chat-bot/corpus.json');
-    await nlp.train();
-    return nlp;
-}
-
 async function init(client, cm, ap) {
+    if(process.env.CHAT_BOT_ENABLE !== 'true') {
+        return;
+    }
+
     // Get the last 100 (discord api limit) messages of each channel and dump it into a json file for chat bot training.
     try {
         console.log("Loading messages from channels for bot training...");
@@ -36,11 +30,11 @@ async function init(client, cm, ap) {
             for(let channel of guild[1].channels) {
                 //console.log(channel[1]);
                 if(channel[1].type === "text") {
-                    console.log(channel[1].id);
+                    console.log("    -> " + channel[1].id);
                     let trainingChannel = client.channels.get(channel[1].id);
                     if(channel[1].id === process.env.CHAT_BOT_CHANNEL) {
                         // Don't train from the chat bot channel
-                        console.log("Ignore bot-playground...");
+                        console.log("    -> Ignore bot-playground...");
                         continue;
                     }
                     let messages = await trainingChannel.fetchMessages({ limit: 100 });
@@ -63,14 +57,14 @@ async function init(client, cm, ap) {
         messagesArr = messagesArr.concat(discordMessagesArr);
 
         fs.writeFileSync(__dirname + '/python/discord_chat_training.json', JSON.stringify(messagesArr), 'utf8');
-        console.log("Loaded " + messagesArr.length + " messages for training!");
+        console.log("    -> Loaded " + messagesArr.length + " messages for training!");
     } catch(e) {
-        console.error("There was an issue loading messages from channels...");
+        console.error("    -> There was an issue loading messages from channels...");
         console.error(e);
         process.exit(1);
     }
 
-    console.log("Starting Python Chat Bot...");
+    console.log("    -> Starting Python Chat Bot...");
 
     const bot = spawn('python3', [__dirname + "/python/bot.py"], {cwd: __dirname + '/python/'});
     bot.stdin.setEncoding('utf-8');
@@ -105,25 +99,18 @@ async function init(client, cm, ap) {
     });
     bot.on('close', async (code) => {
         console.log(`Python Bot exited with code ${code}`);
-        await client.channels.get(process.env.CHAT_BOT_CHANNEL).send("Chat Bot crashed with " + code + " :frowning: ");
+        await client.channels.get(process.env.CHAT_BOT_CHANNEL).send("Chat Bot crashed with code " + code + " :frowning: ");
         await client.channels.get(process.env.CHAT_BOT_CHANNEL).send("Hold on... I am restarting :recycle:");
         process.exit(code);
     });
 
-    //let nlp = await initNLP();
     client.on('message', async (msg) => {
-
         // Is it in the chat channel, or a DM.
         let isVaildChannel = msg.guild === null || msg.channel.id === process.env.CHAT_BOT_CHANNEL;
 
         if(isVaildChannel && msg.author.id !== process.env.BOT_ID && !msg.content.includes("!")) {
             try {
-                /*const response = await nlp.process('en', msg.content);
-                if(response.answer === "NONE") {
-                    return;
-                }
-                await msg.channel.send(response.answer);*/
-                if(msg.content === "" || msg.content.includes("pls")) { // also ignore dank memer commands
+                if(msg.content === "" || msg.content.toLowerCase().includes("pls")) { // also ignore dank memer commands
                     return;
                 }
                 if(msg.author.id === "270904126974590976") {

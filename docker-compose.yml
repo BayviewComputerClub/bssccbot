@@ -1,0 +1,19 @@
+version: '3'
+services:
+  bssccbot:
+    image: "bsscc/bot"
+    env_file:
+      - docker.env
+    environment:
+      - SQL_USER=sa
+      - SQL_PASSWORD=yourStrong(!)Password
+      - SQL_SERVER=bssccbot-mssql
+      - SQL_DB=bssccbot
+    depends_on:
+      - bssccbot-mssql
+  bssccbot-mssql:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrong(!)Password
+      - MSSQL_PID=Express

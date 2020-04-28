@@ -1,5 +1,7 @@
 const axios = require("axios");
 const os = require('os');
+const sql = require('mssql');
+const {createUserIfNotExists} = require("../../services/database");
 
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -8,7 +10,8 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-function init(client, cm, ap) {
+async function init(client, cm, ap) {
+    let pool = await sql.connect();
     cm.push(
         {
             "command": "joke",
@@ -104,6 +107,25 @@ function init(client, cm, ap) {
             }
         }
     );
+    cm.push({
+        "command": "stats",
+        "handler": async (msg) => {
+            let args = ap(msg.content);
+            if(args[0] === "") {
+                await msg.reply("I need a user to check the stats for!");
+                return;
+            }
+            let user = msg.mentions.users.first();
+
+            await createUserIfNotExists(msg.author.id);
+            let numMessages = (await pool.request()
+                .input("user_id", user.id)
+                .query("SELECT num_messages FROM users WHERE user_id = @user_id"))
+                .recordset[0]
+                .num_messages;
+            msg.channel.send(`**Stats for ${user.username}**\nTotal Messages Sent: ${numMessages}`);
+        }
+    });
     cm.push(
         {
             "command": "clear",
@@ -139,6 +161,24 @@ function init(client, cm, ap) {
             }
         }
     );
+
+    // ~~ message events ~~
+    client.on("message", async (msg) => {
+        // Increment the total number of messages in the DB.
+        if(msg.author.id === process.env.BOT_ID) {
+            return;
+        }
+        try {
+            await createUserIfNotExists(msg.author.id);
+            await pool.request()
+                .input("user_id", msg.author.id)
+                .query("UPDATE users SET num_messages = num_messages + 1 WHERE user_id = @user_id");
+        } catch (e) {
+            console.error("Major Database Error!!!");
+            console.error(e);
+        }
+
+    });
 
 
 }
