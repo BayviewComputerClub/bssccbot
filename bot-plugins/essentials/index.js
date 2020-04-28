@@ -118,12 +118,18 @@ async function init(client, cm, ap) {
             let user = msg.mentions.users.first();
 
             await createUserIfNotExists(msg.author.id);
-            let numMessages = (await pool.request()
-                .input("user_id", user.id)
-                .query("SELECT num_messages FROM users WHERE user_id = @user_id"))
-                .recordset[0]
-                .num_messages;
-            msg.channel.send(`**Stats for ${user.username}**\nTotal Messages Sent: ${numMessages}`);
+            try {
+                let numMessages = (await pool.request()
+                    .input("user_id", user.id)
+                    .query("SELECT num_messages FROM users WHERE user_id = @user_id"))
+                    .recordset[0]
+                    .num_messages;
+                msg.channel.send(`**Stats for ${user.username}**\nTotal Messages Sent: ${numMessages}`);
+            } catch (e) {
+                msg.channel.send("No stats for that user yet!");
+                console.error(e);
+            }
+
         }
     });
     cm.push(
