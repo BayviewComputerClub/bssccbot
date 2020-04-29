@@ -105,6 +105,11 @@ async function init(client, cm, ap) {
     });
 
     client.on('message', async (msg) => {
+        // Less spammy, have a chance of replying
+        if(Math.random() < 0.7) {
+            return;
+        }
+
         // Is it in the chat channel, or a DM.
         let isVaildChannel = msg.guild === null || msg.channel.id === process.env.CHAT_BOT_CHANNEL;
 
