@@ -12,6 +12,7 @@
     "dotenv": "^8.2.0",
     "emoji-text": "^0.2.6",
     "erlpack": "github:hammerandchisel/erlpack",
+    "express": "^4.17.1",
     "gm": "^1.23.1",
     "jimp": "^0.10.0",
     "libsodium-wrappers": "^0.7.6",

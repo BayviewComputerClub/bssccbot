@@ -60,8 +60,5 @@ async function createUserIfNotExists(userID) {
     }
 
 }
-function makeUserAdmin(userID) {
-
-}
 
 module.exports = {initDB, connectDB, createUserIfNotExists}

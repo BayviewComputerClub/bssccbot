@@ -168,15 +168,20 @@ async function init(client, cm, ap) {
         {
             "command": "restart",
             "handler": async (msg) => {
-                await msg.reply("Goodbye...");
-                process.exit(0);
-            }
-        }
-    );
-    cm.push(
-        {
-            "command": "die",
-            "handler": async (msg) => {
+                await createUserIfNotExists(msg.author.id);
+
+                if(msg.author.id !== process.env.MOD_ADMIN_ID) {
+                    let isAdmin = (await pool.request()
+                        .input("user_id", msg.author.id)
+                        .query("SELECT is_admin FROM users WHERE user_id = @user_id"))
+                        .recordset[0]
+                        .is_admin;
+                    if(!isAdmin) {
+                        msg.reply(":exclamation: You are not an admin!");
+                        return;
+                    }
+                }
+
                 await msg.reply("Goodbye...");
                 process.exit(0);
             }
