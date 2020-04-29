@@ -4,7 +4,7 @@ from chatterbot.trainers import ListTrainer
 import json
 import emoji
 
-print('Loading BSSCCBot Chat Python Script...')
+#print('Loading BSSCCBot Chat Python Script...')
 
 chatbot = ChatBot('Dr. Smoothie')
 
@@ -20,7 +20,7 @@ trainer.train("chatterbot.corpus.english")
 # Train based on the Discord messages
 listtrainer.train(array)
 
-print('The chat bot is now running! :tada:')
+#print('The chat bot is now running! :tada:')
 # Get a response to an input statement
 while True:
     msg = input()
