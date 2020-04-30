@@ -1,4 +1,5 @@
 const sql = require('mssql');
+var parse = require('parse-duration');
 const {createUserIfNotExists} = require("../../services/database");
 
 // Server moderation features
@@ -84,11 +85,24 @@ async function init(client, cm, ap) {
                                 msg.reply("Removed! :white_check_mark: ");
                                 return;
                             } else {
+
+                                if(typeof args[3] !== "undefined") {
+                                    // There is a time/date passed
+                                    setTimeout(async () => {
+                                        await pool.request()
+                                            .input("user_id", mention.id)
+                                            .query("UPDATE users SET is_jailed = 0 WHERE user_id = @user_id");
+                                        await msg.guild.members.get(mention.id).removeRole(process.env.MOD_JAIL_ROLE);
+                                        msg.reply("Automatically removed " + mention.username + "! :white_check_mark: ");
+                                    }, parse(args[3]));
+                                    await msg.channel.send("Set a timeout for " + parse(args[3], 'm') + " minutes.");
+                                }
                                 await pool.request()
                                     .input("user_id", mention.id)
                                     .query("UPDATE users SET is_jailed = 1 WHERE user_id = @user_id");
                                 await msg.guild.members.get(mention.id).addRole(process.env.MOD_JAIL_ROLE);
                                 msg.reply("Added! :cop:");
+
                                 return;
                             }
                         } catch(e) {

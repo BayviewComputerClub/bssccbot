@@ -169,7 +169,6 @@ async function init(client, cm, ap) {
             "command": "restart",
             "handler": async (msg) => {
                 await createUserIfNotExists(msg.author.id);
-
                 if(msg.author.id !== process.env.MOD_ADMIN_ID) {
                     let isAdmin = (await pool.request()
                         .input("user_id", msg.author.id)

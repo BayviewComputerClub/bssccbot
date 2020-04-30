@@ -14,7 +14,7 @@ This is the bot for the Bayview Computer Club's Discord Server.
 * !xkcd for XKCD comics, !joke for a dad joke
 * !dmoj-problem and !dmoj-user [username]
 * Meme things (!fry @User, !celebrate [text] !celebrate-party [text])
-* Moderation features (!jail @User)
+* Moderation features (!admin)
 
 ### Environment Variables
 The bot needs the following environment variables set:
@@ -24,6 +24,7 @@ BOT_ID=bot id (right click the bot in discord and copy id)
 CHAT_LOG_CHANNEL=channel id (where to log messages to)
 CHAT_BOT_ENABLE=enables the chat bot ("true" or "false", no quotes please)
 CHAT_BOT_CHANNEL=channel id (where to run the chat bot)
+LINUX_VM_ENABLE=enables the linux vm ("true" or "false", no quotes please)
 MOD_JAIL_ROLE=ID of the role to give to jailed users (this role should disable their send messages perm for example)
 SQL_USER=MS SQL Server user
 SQL_PASSWORD=MS SQL Server password

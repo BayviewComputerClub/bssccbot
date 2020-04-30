@@ -1,6 +1,6 @@
 {
   "name": "bssccbot",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Bayview Computer Club's Discord Bot",
   "main": "index.js",
   "dependencies": {
@@ -17,6 +17,7 @@
     "jimp": "^0.10.0",
     "libsodium-wrappers": "^0.7.6",
     "mssql": "^6.2.0",
+    "parse-duration": "^0.3.3",
     "strip-ansi": "^6.0.0",
     "ytdl-core": "^2.1.0",
     "ytsr": "^0.1.12"

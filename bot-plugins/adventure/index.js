@@ -82,6 +82,11 @@ async function startLinux() {
 }
 
 async function init(client, cm, ap) {
+    if(process.env.LINUX_VM_ENABLE !== 'true') {
+        console.log("    -> This plugin is disabled.");
+        return;
+    }
+
     // Start Linux
     await startLinux();
 
