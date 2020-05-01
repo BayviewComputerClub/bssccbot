@@ -110,6 +110,9 @@ async function init(client, cm, ap) {
         if(Math.random() < 0.7) {
             return;
         }
+        if(msg.content.length <= 1) {
+            return;
+        }
 
         // Is it in the chat channel, or a DM.
         let isVaildChannel = msg.guild === null || msg.channel.id === process.env.CHAT_BOT_CHANNEL;
