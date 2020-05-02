@@ -1,4 +1,4 @@
-let simpleCommandMappings = require("./simpleCommandMappings");
+let simpleCommandMappings = require("./simpleCommandMappings.json");
 let complexCommandMappings = require("./complexCommandMappings");
 
 let ca = "!";

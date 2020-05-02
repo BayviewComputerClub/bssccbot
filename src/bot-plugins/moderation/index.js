@@ -1,6 +1,6 @@
 const sql = require('mssql');
 var parse = require('parse-duration');
-const {createUserIfNotExists} = require("../../services/database");
+const {createUserIfNotExists} = require("../../services/database/database");
 
 // Server moderation features
 async function init(client, cm, ap) {

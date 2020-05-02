@@ -1,7 +1,7 @@
 const axios = require("axios");
 const os = require('os');
 const sql = require('mssql');
-const {createUserIfNotExists} = require("../../services/database");
+const {createUserIfNotExists} = require("../../services/database/database");
 
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);

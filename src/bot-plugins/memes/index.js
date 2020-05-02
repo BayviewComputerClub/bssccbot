@@ -44,7 +44,7 @@ function init(client, cm, ap) {
             "handler": async (msg) => {
                 let text = ap(msg.content)[1];
 
-                let imageFile = await readFile("./bot-plugins/memes/image-templates/celebrate.gif");
+                let imageFile = await readFile(__dirname + "/image-templates/celebrate.gif");
                 gm(imageFile, "microsoft-celebrate-bssccbot.gif")
                     .resize(300,300)
                     .stroke("#ffffff")
@@ -74,7 +74,7 @@ function init(client, cm, ap) {
             "handler": async (msg) => {
                 let text = ap(msg.content)[1];
 
-                let imageFile = await readFile("./bot-plugins/memes/image-templates/celebrate-party.gif");
+                let imageFile = await readFile(__dirname + "/image-templates/celebrate-party.gif");
                 // produces really glitchy text for some reason...
                 gm(imageFile, "microsoft-celebrate-party-bssccbot.gif")
                     .stroke("#ffffff")
