@@ -14,7 +14,7 @@ RUN pip3 install emoji
 COPY package*.json ./
 RUN npm ci
 
-COPY ./src/* .
+COPY ./src .
 USER root
 CMD [ "node", "index.js" ]
 
