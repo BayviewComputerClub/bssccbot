@@ -8,6 +8,9 @@ function isValid(msg) {
 function init(client, cm) {
     client.on("message", msg => {
         if(isValid(msg)) {
+            var content msg.content.replace(/<@!?[0-9]+>/gi, function (x) {
+                return client.fetchMember(x.replace(/<@!?|>/gi, "").displayName;
+            });
             client.channels.get(config.channel).send("[" + new Date().toISOString() + "] @" + msg.author.tag + " in #" + msg.channel.name + ": " + msg.content);
         }
     });
