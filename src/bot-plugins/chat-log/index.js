@@ -10,7 +10,7 @@ function init(client, cm) {
         if(isValid(msg)) {
 			var content = msg.content.replace(/<@!?\d+>/gi, function (x) {
 				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
-                return "@" + member.nickname === null ? member.user.username : member.nickname;
+                return "@" + (member.nickname === null ? member.user.username : member.nickname);
             });
             client.channels.get(config.channel).send("[" + new Date().toISOString() + "] @" + msg.author.tag + " in #" + msg.channel.name + ": " + content);
         }
@@ -19,11 +19,11 @@ function init(client, cm) {
         if(isValid(msg) && isValid(newMsg)) {
 			var content = msg.content.replace(/<@!?\d+>/gi, function (x) {
 				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
-				return "@" + member.nickname === null ? member.user.username : member.nickname;
+				return "@" + (member.nickname === null ? member.user.username : member.nickname);
             });
 			var newContent = newMsg.content.replace(/<@!?\d+>/gi, function (x) {
 				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
-				return "@" + member.nickname === null ? member.user.username : member.nickname;
+				return "@" + (member.nickname === null ? member.user.username : member.nickname);
             });
             client.channels.get(config.channel).send("[" + new Date().toISOString() + "] @" + msg.author.tag + " updated in #" + msg.channel.name + ": " + content + " --> " + newContent);
         }
