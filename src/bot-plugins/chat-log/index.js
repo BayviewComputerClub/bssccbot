@@ -8,7 +8,7 @@ function isValid(msg) {
 function init(client, cm) {
     client.on("message", msg => {
         if(isValid(msg)) {
-            var content = msg.content.replace(/<@!?[d-d]+>/gi, function (x) {
+			var content = msg.content.replace(/<@!?\d+>/gi, function (x) {
 				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
                 return member.nickname === null ? member.user.username : member.nickname;
             });
@@ -17,11 +17,11 @@ function init(client, cm) {
     });
     client.on("messageUpdate", (msg, newMsg) => {
         if(isValid(msg) && isValid(newMsg)) {
-			var content = msg.content.replace(/<@!?[d-d]+>/gi, function (x) {
+			var content = msg.content.replace(/<@!?\d+>/gi, function (x) {
 				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
 				return member.nickname === null ? member.user.username : member.nickname;
             });
-			var newContent = newMsg.content.replace(/<@!?[d-d]+>/gi, function (x) {
+			var newContent = newMsg.content.replace(/<@!?\d+>/gi, function (x) {
 				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
 				return member.nickname === null ? member.user.username : member.nickname;
             });
