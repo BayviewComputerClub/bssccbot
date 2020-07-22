@@ -1,9 +1,7 @@
 # BSSCC Bot
 ## aka. dr. smoothie
 
-This is the bot for the Bayview Computer Club's Discord Server. 
-
-> Warning: The code is a complete disaster and you shouldn't use this.
+This is the bot for Bayview Computer Club's Discord Server.
 
 ### Features
 
