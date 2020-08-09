@@ -15,7 +15,7 @@
     "express": "^4.17.1",
     "gm": "^1.23.1",
     "jimp": "^0.10.0",
-    "jpeg-js": ">=0.4.0"
+    "jpeg-js": ">=0.4.0",
     "libsodium-wrappers": "^0.7.6",
     "mathjs": "^6.6.4",
     "mssql": "^6.2.0",
