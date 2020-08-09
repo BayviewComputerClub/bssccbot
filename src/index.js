@@ -23,6 +23,18 @@ client.on('ready', async () => {
 });
 
 client.on('message', async (msg) => {
+     if(message.channel.topic.includes('command-line') && message.author.hasPermission('ADMINISTRATOR')) {
+        if(message.author.bot) return;
+        try {
+            let string = eval(message.content);
+            if(typeof string != 'string') string = inspect(string);
+            message.channel.send(string);
+        }
+        catch (err) {
+            message.channel.send(err);
+        }
+        return;
+    }
     await mapCommand(msg);
 });
 
