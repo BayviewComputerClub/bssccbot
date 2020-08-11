@@ -23,15 +23,15 @@ client.on('ready', async () => {
 });
 
 client.on('message', async (msg) => {
-     if(message.channel.topic.includes('command-line') && message.author.hasPermission('ADMINISTRATOR')) {
-        if(message.author.bot) return;
+     if(msg.channel.topic.includes('command-line') && msg.author.hasPermission('ADMINISTRATOR')) {
+        if(msg.author.bot) return;
         try {
-            let string = eval(message.content);
+            let string = eval(msg.content);
             if(typeof string != 'string') string = inspect(string);
-            message.channel.send(string);
+            msg.channel.send(string);
         }
         catch (err) {
-            message.channel.send(err);
+            msg.channel.send(err);
         }
         return;
     }
