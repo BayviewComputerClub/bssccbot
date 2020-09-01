@@ -8,24 +8,12 @@ function isValid(msg) {
 function init(client, cm) {
     client.on("message", msg => {
         if(isValid(msg)) {
-			var content = msg.content.replace(/<@!?\d+>/gi, function (x) {
-				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
-                return "@" + (member.nickname === null ? member.user.username : member.nickname);
-            });
-            client.channels.get(config.channel).send("[" + new Date().toISOString() + "] @" + msg.author.tag + " in #" + msg.channel.name + ": " + content);
+            client.channels.get(config.channel).send(Discord.removeMentions("[" + new Date().toISOString() + "] @" + msg.author.tag + " in #" + msg.channel.name + ": " + msg.content));
         }
     });
     client.on("messageUpdate", (msg, newMsg) => {
-        if(isValid(msg) && isValid(newMsg)) {
-			var content = msg.content.replace(/<@!?\d+>/gi, function (x) {
-				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
-				return "@" + (member.nickname === null ? member.user.username : member.nickname);
-            });
-			var newContent = newMsg.content.replace(/<@!?\d+>/gi, function (x) {
-				var member = msg.guild.member(x.replace(/<@!?|>/gi, ""));
-				return "@" + (member.nickname === null ? member.user.username : member.nickname);
-            });
-            client.channels.get(config.channel).send("[" + new Date().toISOString() + "] @" + msg.author.tag + " updated in #" + msg.channel.name + ": " + content + " --> " + newContent);
+        if(isValid(msg)) {
+            client.channels.get(config.channel).send(Discord.removeMentions("[" + new Date().toISOString() + "] @" + msg.author.tag + " updated in #" + msg.channel.name + ": " + msg.content + " --> " + newMsg.content));
         }
     });
 }

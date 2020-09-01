@@ -13,7 +13,7 @@ const loadPlugins = require("./services/plugin-loader/plugins");
 let isLoaded = false;
 
 // Connect to Discord
-const client = new Discord.Client({disableEveryone: true, disableMentions: 'everyone'});
+const client = new Discord.Client();
 
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
