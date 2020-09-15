@@ -1,5 +1,7 @@
 let  { evaluate } = require("mathjs");
 let mjAPI = require("mathjax-node-svg2png");
+const Jimp = require("jimp");
+
 mjAPI.config({
     MathJax: {
     }
@@ -27,17 +29,20 @@ function init(client, cm, ap) {
             let args = ap(msg.content);
             mjAPI.typeset({
                 math: args[1],
-                format: "inline-TeX",
+                format: "TeX",
                 png:true,
-                scale: 3
+                scale: 2
             }, async (data)  => {
                 if (!data.errors) {
                     console.log(typeof data.png)
                     let buff = new Buffer(data.png.split(',')[1], 'base64');
+                    let image = await Jimp.read(buff);
+                    image.background(0xffffffff);
+                    let imgBuf = await image.getBufferAsync(Jimp.MIME_JPEG);
                     await msg.channel.send("Rendered LaTeX:", {
                         files: [{
-                            attachment: buff,
-                            name: 'bssccbot-latex.png'
+                            attachment: imgBuf,
+                            name: 'bssccbot-latex.jpg'
                         }]
                     });
                 } else {
