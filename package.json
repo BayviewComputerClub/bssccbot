@@ -17,6 +17,8 @@
     "jimp": "^0.10.0",
     "jpeg-js": ">=0.4.0",
     "libsodium-wrappers": "^0.7.6",
+    "mathjax-node": "^2.1.1",
+    "mathjax-node-svg2png": "^2.0.0",
     "mathjs": "^6.6.4",
     "mssql": "^6.2.0",
     "parse-duration": "^0.3.3",
