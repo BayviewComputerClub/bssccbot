@@ -8,12 +8,15 @@ function isValid(msg) {
 function init(client, cm) {
     client.on("message", msg => {
         if(isValid(msg)) {
-            client.channels.get(config.channel).send(Discord.removeMentions("[" + new Date().toISOString() + "] @" + msg.author.tag + " in #" + msg.channel.name + ": " + msg.content));
+            let text = msg.content.replace("@", "-");
+            client.channels.get(config.channel).send("[" + new Date().toISOString() + "] @" + msg.author.tag + " in #" + msg.channel.name + ": " + text);
         }
     });
     client.on("messageUpdate", (msg, newMsg) => {
         if(isValid(msg)) {
-            client.channels.get(config.channel).send(Discord.removeMentions("[" + new Date().toISOString() + "] @" + msg.author.tag + " updated in #" + msg.channel.name + ": " + msg.content + " --> " + newMsg.content));
+            let text = msg.content.replace("@", "-");
+            let newText = newMsg.content.replace("@", "-");
+            client.channels.get(config.channel).send("[" + new Date().toISOString() + "] @" + msg.author.tag + " updated in #" + msg.channel.name + ": " + text + " --> " + newText);
         }
     });
 }
