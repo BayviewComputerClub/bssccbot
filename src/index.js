@@ -23,16 +23,8 @@ client.on('ready', async () => {
 });
 
 client.on('message', async (msg) => {
-     if(msg.channel.topic.includes('command-line') && msg.author.hasPermission('ADMINISTRATOR')) {
-        if(msg.author.bot) return;
-        try {
-            let string = eval(msg.content);
-            if(typeof string != 'string') string = inspect(string);
-            msg.channel.send(string);
-        }
-        catch (err) {
-            msg.channel.send(err);
-        }
+    if (msg.channel.type === "dm") {
+        msg.reply("Bot DM Test Message");
         return;
     }
     await mapCommand(msg);

@@ -41,7 +41,9 @@ async function init(client, cm, ap) {
                     let messages = await trainingChannel.fetchMessages({ limit: 100 });
                     for(let message of messages) {
                         //console.log(message[1].content);
-
+                        if(message[1].content.includes("@")) {
+                            continue;
+                        }
                         discordMessagesArr.push(
                             emojiText.convert(
                                 message[1].content.replace("@", "-"),
@@ -105,31 +107,32 @@ async function init(client, cm, ap) {
         process.exit(code);
     });
 
-    client.on('message', async (msg) => {
-        // Less spammy, have a chance of replying
-        if(Math.random() < 0.7) {
-            return;
-        }
-        if(msg.content.length <= 1) {
-            return;
-        }
+    cm.push({
+        "command": "chat",
+        "handler": async (msg) => {
+            let text = ap(msg.content)[1];
 
-        // Is it in the chat channel, or a DM.
-        let isVaildChannel = msg.guild === null || msg.channel.id === process.env.CHAT_BOT_CHANNEL;
+            if(msg.content <= 1) {
+                return;
+            }
 
-        if(isVaildChannel && msg.author.id !== process.env.BOT_ID && !msg.content.includes("!")) {
-            try {
-                if(msg.content === "" || msg.content.toLowerCase().includes("pls")) { // also ignore dank memer commands
-                    return;
+            // Is it in the chat channel, or a DM.
+            //let isVaildChannel = msg.guild === null || msg.channel.id === process.env.CHAT_BOT_CHANNEL;
+
+            if(msg.author.id !== process.env.BOT_ID) {
+                try {
+                    if(msg.content === "" || msg.content.toLowerCase().includes("pls")) { // also ignore dank memer commands
+                        return;
+                    }
+                    if(msg.author.id === "270904126974590976") {
+                        // ignore dank memer himself
+                        return;
+                    }
+                    bot.stdin.write(text + "\r\n");
+                } catch (e) {
+                    //console.log(e);
+                    await msg.channel.send("error:" + e.message);
                 }
-                if(msg.author.id === "270904126974590976") {
-                    // ignore dank memer himself
-                    return;
-                }
-                bot.stdin.write(msg.content + "\r\n");
-            } catch (e) {
-                //console.log(e);
-                await msg.channel.send("error:" + e.message);
             }
         }
     });
