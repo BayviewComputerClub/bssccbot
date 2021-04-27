@@ -8,9 +8,9 @@ let musicQueue = [];
 
 // Voice channel object
 let vc = null;
-// Voice channel connection object.
+// Voice channel connection (VoiceConnection) object.
 let conn;
-// Voice channel stream object.
+// Voice channel stream (StreamDispatcher) object.
 let dispatcher;
 
 // YTDL Stream
@@ -70,6 +70,7 @@ function init(client, cm, ap) {
                             await msg.reply("Connected :tada:... Please wait...");
                         } catch (e) {
                             await msg.channel.send("Could not connect :no_entry_sign:... are you in a voice channel?");
+                            vc = null;
                             console.trace(e);
                             return;
                         }
@@ -94,6 +95,21 @@ function init(client, cm, ap) {
                 vc = null;
                 await msg.reply("The party's over! :wave:");
                 isPlaying = false;
+            }
+        }
+    );
+    cm.push(
+        {
+            "command": "skip",
+            "handler": async(msg) => {
+                if(vc == null) {
+                    msg.reply("I am not playing anything!");
+                    return;
+                }
+                await msg.reply(":track_next: Skipping the current song...");
+                dispatcher.pause();
+                isPlaying = false;
+                await playSong(musicQueue.pop(), msg);
             }
         }
     );
