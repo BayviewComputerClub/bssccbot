@@ -23,10 +23,6 @@ client.on('ready', async () => {
 });
 
 client.on('message', async (msg) => {
-    if (msg.channel.type === "dm") {
-        msg.reply("Bot DM Test Message");
-        return;
-    }
     await mapCommand(msg);
 });
 
