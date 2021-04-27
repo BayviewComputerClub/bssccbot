@@ -42,6 +42,8 @@ function init(client, cm, ap) {
         {
             "command": "celebrate",
             "handler": async (msg) => {
+                msg.reply("Please wait while I generate your freshly baked meme...");
+
                 let text = ap(msg.content)[1];
 
                 let imageFile = await readFile(__dirname + "/image-templates/celebrate.gif");
@@ -72,6 +74,8 @@ function init(client, cm, ap) {
         {
             "command": "celebrate-party",
             "handler": async (msg) => {
+                msg.reply("Please wait while I generate your freshly baked meme...");
+
                 let text = ap(msg.content)[1];
 
                 let imageFile = await readFile(__dirname + "/image-templates/celebrate-party.gif");
