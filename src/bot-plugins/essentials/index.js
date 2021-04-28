@@ -129,7 +129,7 @@ async function init(client, cm, ap) {
             "category": "Essentials",
             "desc": "Let the Magic 8-Ball:tm: answer your question",
             "handler": (msg) => {
-                msg.reply(eightball() + + ".");
+                msg.reply(eightball() + ".");
             }
         }
     );
