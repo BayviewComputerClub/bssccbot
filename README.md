@@ -1,7 +1,8 @@
 # BSSCC Bot
 ## aka. dr. smoothie
 
-This is the bot for Bayview Computer Club's Discord Server.
+A Discord bot with a handful of features. Originally developed 
+for the Bayview Computer Club Discord server.
 
 ### Features
 
@@ -14,6 +15,69 @@ This is the bot for Bayview Computer Club's Discord Server.
 * Meme things (!fry @User, !celebrate [text] !celebrate-party [text])
 * Moderation features (!admin)
 
+### Commands
+```
+Uncategorized
+----------
+!test
+!admin
+
+Chat
+----------
+!chat - Talk to the bot! (!chat [msg])
+
+DMOJ
+----------
+!dmoj-problem - Get a random DMOJ problem
+!dmoj-user - Get stats for a DMOJ user (!dmoj-user [username])
+
+Essentials
+----------
+!joke - Tells a random dad joke
+!fortune - Tells you your fortune
+!cowsay - Makes a cow say the message (!cowsay [text])
+!xkcd - Gets an XKCD comic (!xkcd, !xkcd latest, !xkcd [comic number])
+!roll - Roll a 6-sided die
+!random - Get a random number (!random [max number])
+!8ball - Let the Magic 8-Ball™️ answer your question
+!wiki - Lookup the Wikipedia article for a topic (!wiki [topic])
+!stats - See how many messages a user has sent (!stats @user)
+!stats-top - Find the top chatters on the server
+!clear - Clear the chat
+!info - Display bot server information
+!restart - (Admin only) Restart the bot
+
+Linux
+----------
+!linux - Run a command in a BusyBox/Linux VM (!linux [command])
+!enter - Press the enter key in the VM
+!ctrlc - Press Ctrl+C in the VM
+!linux-help - About the Linux subsystem
+
+Math
+----------
+!math - Calculator (!math [math problem])
+!latex - Render text as LaTeX (!latex [latex string])
+
+Memes
+----------
+!fry - Fry/Cursify the users profile picture (!fry @user)
+!celebrate - Microsoft Dance GIF (!celebrate [text])
+!celebrate-party - Microsoft Dance Party GIF (!celebrate-party [text])
+
+Music
+----------
+!play - Plays or Queues a song in a VC (!play [song name])
+!stop - Stops playing music and leaves the VC
+!skip - Skip the current song
+
+Informational
+----------
+!ping
+!website
+!about
+```
+
 ### Environment Variables
 The bot needs the following environment variables set:
 ```dotenv
@@ -23,6 +87,7 @@ CHAT_LOG_CHANNEL=channel id (where to log messages to)
 CHAT_BOT_ENABLE=enables the chat bot ("true" or "false", no quotes please)
 CHAT_BOT_CHANNEL=channel id (where to run the chat bot)
 LINUX_VM_ENABLE=enables the linux vm ("true" or "false", no quotes please)
+MOD_ADMIN_ID=ID of the initial admin user
 MOD_JAIL_ROLE=ID of the role to give to jailed users (this role should disable their send messages perm for example)
 SQL_USER=MS SQL Server user
 SQL_PASSWORD=MS SQL Server password

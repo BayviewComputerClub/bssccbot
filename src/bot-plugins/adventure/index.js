@@ -93,6 +93,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "linux",
+            "category": "Linux",
+            "desc": "Run a command in a BusyBox/Linux VM (!linux [command])",
             "handler": (msg) => {
                 if(!booted) {
                     msg.reply("Linux is still booting... :man_running:");
@@ -114,6 +116,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "enter",
+            "category": "Linux",
+            "desc": "Press the enter key in the VM",
             "handler": (msg) => {
                 emulator.serial0_send("\u000a");
             }
@@ -122,6 +126,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "ctrlc",
+            "category": "Linux",
+            "desc": "Press Ctrl+C in the VM",
             "handler": (msg) => {
                 emulator.serial0_send("\x03");
             }
@@ -130,6 +136,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "linux-help",
+            "category": "Linux",
+            "desc": "About the Linux subsystem",
             "handler": (msg) => {
                 msg.reply(`
                 ~ BSSCCBot Linux Subsystem ~

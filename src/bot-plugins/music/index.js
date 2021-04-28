@@ -55,6 +55,8 @@ function init(client, cm, ap) {
     cm.push(
         {
             "command": "play",
+            "category": "Music",
+            "desc": "Plays or Queues a song in a VC (!play [song name])",
             "handler": async (msg) => {
                 try{
                     let search = ap(msg.content);
@@ -86,6 +88,8 @@ function init(client, cm, ap) {
     cm.push(
         {
             "command": "stop",
+            "category": "Music",
+            "desc": "Stops playing music and leaves the VC",
             "handler": async(msg) => {
                 if(vc == null) {
                     msg.reply("I am not playing anything!");
@@ -101,6 +105,8 @@ function init(client, cm, ap) {
     cm.push(
         {
             "command": "skip",
+            "category": "Music",
+            "desc": "Skip the current song",
             "handler": async(msg) => {
                 if(vc == null) {
                     msg.reply("I am not playing anything!");

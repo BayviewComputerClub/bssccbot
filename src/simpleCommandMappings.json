@@ -5,6 +5,10 @@
   },
   {
     "command": "website",
-    "response": "The club website is: https://bayview.club/ :tada:"
+    "response": "BSSCCBot can be found at: https://github.com/BayviewComputerClub/bssccbot"
+  },
+  {
+    "command": "about",
+    "response": "BSSCCBot is a Discord server bot written by Seshpenguin."
   }
 ]

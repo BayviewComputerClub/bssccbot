@@ -1,6 +1,10 @@
 const axios = require("axios");
 const os = require('os');
 const sql = require('mssql');
+const eightball = require('8ball');
+const wiki = require('wikijs').default;
+const truncate = require('truncate');
+const svg2img = require('svg2img');
 const {createUserIfNotExists} = require("../../services/database/database");
 
 const util = require('util');
@@ -15,6 +19,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "joke",
+            "category": "Essentials",
+            "desc": "Tells a random dad joke",
             "handler": async (msg) => {
                 axios.defaults.headers = {
                     'Accept': 'text/plain',
@@ -27,6 +33,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "fortune",
+            "category": "Essentials",
+            "desc": "Tells you your fortune",
             "handler": async (msg) => {
                 try {
                     const { stdout } = await exec('fortune');
@@ -40,6 +48,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "cowsay",
+            "category": "Essentials",
+            "desc": "Makes a cow say the message (!cowsay [text])",
             "handler": async (msg) => {
                 let text = ap(msg.content)[1].replace(/(\r\n|\n|\r)/gm,"");
 
@@ -55,6 +65,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "xkcd",
+            "category": "Essentials",
+            "desc": "Gets an XKCD comic (!xkcd, !xkcd latest, !xkcd [comic number])",
             "handler": async (msg) => {
                 let args = ap(msg.content);
                 try {
@@ -90,6 +102,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "roll",
+            "category": "Essentials",
+            "desc": "Roll a 6-sided die",
             "handler": (msg) => {
                 msg.reply(getRandomInt(5) + 1); // 1-6
             }
@@ -98,6 +112,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "random",
+            "category": "Essentials",
+            "desc": "Get a random number (!random [max number])",
             "handler": (msg) => {
                 if(isNaN(ap(msg.content)[1])) {
                     msg.reply("Please specify the max int!");
@@ -107,8 +123,55 @@ async function init(client, cm, ap) {
             }
         }
     );
+    cm.push(
+        {
+            "command": "8ball",
+            "category": "Essentials",
+            "desc": "Let the Magic 8-Ball:tm: answer your question",
+            "handler": (msg) => {
+                msg.reply(eightball() + + ".");
+            }
+        }
+    );
+    cm.push(
+        {
+            "command": "wiki",
+            "category": "Essentials",
+            "desc": "Lookup the Wikipedia article for a topic (!wiki [topic])",
+            "handler": async (msg) => {
+                let args = ap(msg.content);
+                let articleSearch = await wiki().search(args[1]);
+                if(articleSearch.results.length === 0) {
+                    msg.reply(":x: No articles for " + args[1] + " found!");
+                    return;
+                }
+                let article = await wiki().page(articleSearch.results[0])
+                let summary = await article.summary();
+                let mainImage = await article.mainImage();
+                let url = await article.url();
+                if(mainImage.endsWith("svg")) {
+                    svg2img(
+                        mainImage,
+                        async (error, buffer) => {
+                            await msg.channel.send("", {
+                                files: [{
+                                    attachment: buffer,
+                                    name: 'wikipedia-image.png'
+                                }]
+                            });
+                            await msg.channel.send(truncate(summary, 1000) + "\n <" + url + ">");
+                        });
+                } else {
+                    await msg.channel.send(mainImage)
+                    await msg.channel.send(truncate(summary, 1000) + "\n <" + url + ">");
+                }
+            }
+        }
+    );
     cm.push({
         "command": "stats",
+        "category": "Essentials",
+        "desc": "See how many messages a user has sent (!stats @user)",
         "handler": async (msg) => {
             let args = ap(msg.content);
             if(args[0] === "") {
@@ -134,6 +197,8 @@ async function init(client, cm, ap) {
     });
     cm.push({
         "command": "stats-top",
+        "category": "Essentials",
+        "desc": "Find the top chatters on the server",
         "handler": async (msg) => {
             await msg.channel.send("**Top 5 Users with the Most Messages Sent (Since I Started Counting)**");
             let topUsers = (await pool.request()
@@ -150,6 +215,8 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "clear",
+            "category": "Essentials",
+            "desc": "Clear the chat",
             "handler": (msg) => {
                 let clearMsg = "\n";
                 msg.channel.send("." + clearMsg.repeat(1000) + "All Clean :smile:"); // 1-6
@@ -159,14 +226,21 @@ async function init(client, cm, ap) {
     cm.push(
         {
             "command": "info",
-            "handler": (msg) => {
-                msg.reply("I am running Node " + process.version + " on " + os.platform() + " " + os.release());
+            "category": "Essentials",
+            "desc": "Display bot server information",
+            "handler": async (msg) => {
+                await msg.channel.send("I am running Node " + process.version + " on " + os.platform() + " " + os.release() + "!");
+                let sqlVersion = (await pool.request().query("SELECT @@VERSION AS VERSION")).recordset[0].VERSION;
+                console.log(sqlVersion)
+                msg.channel.send(sqlVersion);
             }
         }
     );
     cm.push(
         {
             "command": "restart",
+            "category": "Essentials",
+            "desc": "(Admin only) Restart the bot",
             "handler": async (msg) => {
                 await createUserIfNotExists(msg.author.id);
                 if(msg.author.id !== process.env.MOD_ADMIN_ID) {

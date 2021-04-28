@@ -11,6 +11,8 @@ mjAPI.start();
 function init(client, cm, ap) {
     cm.push({
         "command": "math",
+        "category": "Math",
+        "desc": "Calculator (!math [math problem])",
         "handler": async (msg) => {
             let args = ap(msg.content);
             try {
@@ -24,6 +26,8 @@ function init(client, cm, ap) {
         }
     }, {
         "command": "latex",
+        "category": "Math",
+        "desc": "Render text as LaTeX (!latex [latex string])",
         "handler": async (msg) => {
             await msg.channel.send("Please wait...");
             let args = ap(msg.content);

@@ -10,6 +10,8 @@ function init(client, cm, ap) {
     cm.push(
         {
             "command": "fry",
+            "category": "Memes",
+            "desc": "Fry/Cursify the users profile picture (!fry @user)",
             "handler": async (msg) => {
                 let args = ap(msg.content);
                 if(args[0] === "") {
@@ -41,6 +43,8 @@ function init(client, cm, ap) {
     cm.push(
         {
             "command": "celebrate",
+            "category": "Memes",
+            "desc": "Microsoft Dance GIF (!celebrate [text])",
             "handler": async (msg) => {
                 msg.reply("Please wait while I generate your freshly baked meme...");
 
@@ -73,6 +77,8 @@ function init(client, cm, ap) {
     cm.push(
         {
             "command": "celebrate-party",
+            "category": "Memes",
+            "desc": "Microsoft Dance Party GIF (!celebrate-party [text])",
             "handler": async (msg) => {
                 msg.reply("Please wait while I generate your freshly baked meme...");
 

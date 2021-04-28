@@ -15,6 +15,8 @@ function init(client, cm, ap) {
     cm.push(
         {
             "command": "dmoj-problem",
+            "category": "DMOJ",
+            "desc": "Get a random DMOJ problem",
             "handler": async (msg) => {
                 axios.defaults.headers = {
                     'Accept': 'application/json',
@@ -31,6 +33,8 @@ function init(client, cm, ap) {
     cm.push(
         {
             "command": "dmoj-user",
+            "category": "DMOJ",
+            "desc": "Get stats for a DMOJ user (!dmoj-user [username])",
             "handler": async (msg) => {
                 let user = ap(msg.content)[1];
                 if(user === "") {

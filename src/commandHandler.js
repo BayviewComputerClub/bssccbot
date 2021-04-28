@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 let simpleCommandMappings = require("./simpleCommandMappings.json");
 let complexCommandMappings = require("./complexCommandMappings");
 
@@ -25,16 +27,35 @@ async function mapCommand(msg) {
 
     // Special Command: !help
     let commands = "";
+    let categoryLists = [];
+    let helpMsg = "";
     if(msgIsCommand("help", msg.content)) {
-        await msg.reply("Here are a list of currently registered commands: ");
+        helpMsg += "Here are a list of currently registered commands: \n";
         for(let i = 0; i < simpleCommandMappings.length; i++) {
-            commands = commands + "\n" + simpleCommandMappings[i].command
+            commands = commands + "\n!" + simpleCommandMappings[i].command
         }
-        for(let i = 0; i < complexCommandMappings.length; i++) {
-            commands = commands + "\n" + complexCommandMappings[i].command;
-        }
-        msg.channel.send("The command prefix is: " + ca);
-        msg.channel.send(commands);
+        helpMsg += "The command prefix is: " + ca + "\n";
+        //msg.channel.send(commands);
+        await _.forEach(complexCommandMappings, (c) => {
+            if("category" in c) {
+                if(c.category in categoryLists) {
+                    categoryLists[c.category] += "\n" + ca + c.command + " - *" + c.desc + "*";
+                } else {
+                    categoryLists[c.category] = ca + c.command + " - *" + c.desc + "*";
+                }
+            } else {
+                if("Uncategorized" in categoryLists) {
+                    categoryLists["Uncategorized"] += "\n" + ca + c.command;
+                } else {
+                    categoryLists["Uncategorized"] = ca + c.command;
+                }
+            }
+        });
+        await _.forOwn(categoryLists, async (value, key) => {
+            helpMsg += ("**" + key + "**\n----------\n" + value + "\n\n");
+        });
+        helpMsg += ("**Informational**\n----------" + commands);
+        await msg.reply(helpMsg)
         return true;
     }
 

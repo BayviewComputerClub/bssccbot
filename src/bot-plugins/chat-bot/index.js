@@ -109,6 +109,8 @@ async function init(client, cm, ap) {
 
     cm.push({
         "command": "chat",
+        "category": "Chat",
+        "desc": "Talk to the bot! (!chat [msg])",
         "handler": async (msg) => {
             let text = ap(msg.content)[1];
 
@@ -128,6 +130,9 @@ async function init(client, cm, ap) {
                         // ignore dank memer himself
                         return;
                     }
+                    text = emojiText.convert(text, {
+                        delimiter: ':'
+                    });
                     bot.stdin.write(text + "\r\n");
                 } catch (e) {
                     //console.log(e);
