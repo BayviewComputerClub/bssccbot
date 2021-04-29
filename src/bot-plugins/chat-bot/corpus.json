@@ -43,6 +43,17 @@
       ]
     },
     {
+      "intent": "agent.friendlyuser",
+      "utterances": [
+        "lost",
+        "midi"
+      ],
+      "answers": [
+        "They are awesome!",
+        "I have been told I must be nice to them"
+      ]
+    },
+    {
       "intent": "agent.acquaintance",
       "utterances": [
         "say about you",

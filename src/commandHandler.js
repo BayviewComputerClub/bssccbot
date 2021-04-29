@@ -20,7 +20,11 @@ async function mapCommand(msg) {
     // Then handle complex command mappings.
     for(let i = 0; i < complexCommandMappings.length; i++) {
         if(msgIsCommand(complexCommandMappings[i].command, msg.content)) {
-            await complexCommandMappings[i].handler(msg);
+            try {
+                await complexCommandMappings[i].handler(msg);
+            } catch(e) {
+                await msg.channel.send("An error has occurred running the command: " + e.message);
+            }
             return true;
         }
     }

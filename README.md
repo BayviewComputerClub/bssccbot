@@ -100,7 +100,7 @@ A ".env" file can be used to set these when running locally.
 A Docker image is available at: https://hub.docker.com/repository/docker/bsscc/bot (Be sure to set the environment variables!)
 
 #### Deploying with Docker
-BSSCCBot requires MS SQL Server! The recommended way to deploy using docker is by using docker-compose, which 
+BSSCCBot requires Microsoft SQL Server. The recommended way to deploy using docker is by using docker-compose, which 
 will automatically setup a BSSCCBot container and MS SQL Server container, linked with a network.
 
 First create a "docker.env" file with the above environment variables set (EXCLUDING SQL_*).
@@ -134,6 +134,8 @@ To register a command:
 ```javascript
 cm.push({
     "command": "",
+    "category": "",
+    "desc": "",
     "handler": async (msg) => {
 
     }
@@ -141,6 +143,8 @@ cm.push({
 ```
 Command is the command **without** the prefix. Handler is a function that is 
 called when the command is invoked (with [message object](https://discord.js.org/#/docs/main/stable/class/Message) passed to it).
+
+Category and Description are used in the `!help` command output.
 
 #### Argument Parser
 The ap() function will return the command at index 0, and the rest of the text at index 1.

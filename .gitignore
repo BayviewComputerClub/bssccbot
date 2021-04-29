@@ -109,3 +109,5 @@ dist
 .DS_store
 
 model.nlp
+
+source_archive.tar.gz
