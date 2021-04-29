@@ -22,6 +22,11 @@ Uncategorized
 !test
 !admin
 
+AGPL Compliance
+----------
+!generate-source - Generate an archive of the currently running bot source code
+!source - Links to the development source code repository
+
 Chat
 ----------
 !chat - Talk to the bot! (!chat [msg])
