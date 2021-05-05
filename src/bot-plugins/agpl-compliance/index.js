@@ -12,7 +12,7 @@ function init(client, cm, ap) {
             await msg.channel.send("Source path: " + process.env.PWD);
             await msg.channel.send("Server info: Node " + process.version + " on " + os.platform() + " " + os.release());
             const command = "tar --exclude='./node_modules' --exclude='.idea' --exclude='.env' --exclude='.git' --exclude='source_archive.tar.gz' --exclude='./src/bot-plugins/adventure/image/linux4.iso' --exclude='./src/bot-plugins/memes/image-templates' -zcvf source_archive.tar.gz " + process.env.PWD;
-            exec(command, async (error, stdout, stderr) => {
+            exec(command, {maxBuffer: 1024 * 500}, async (error, stdout, stderr) => {
                 if (error) {
                     console.log(`error: ${error.message}`);
                     await msg.channel.send(`error: ${error.message}`)
