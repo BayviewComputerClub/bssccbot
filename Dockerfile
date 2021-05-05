@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 
 # Install dependancies first.
 RUN apt-get update -y
-RUN apt-get install ffmpeg graphicsmagick fortune cowsay python3-pip fonts-emojione -y
+RUN apt-get install ffmpeg graphicsmagick fortune cowsay python3-pip fonts-noto-color-emoji -y
 
 ENV PATH="/usr/games:${PATH}"
 
