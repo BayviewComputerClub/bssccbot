@@ -21,7 +21,7 @@
     "lodash": "^4.17.21",
     "mathjax-node": "^2.1.1",
     "mathjax-node-svg2png": "^2.0.0",
-    "mathjs": "^6.6.4",
+    "mathjs": "^7.5.1",
     "mssql": "^6.2.0",
     "parse-duration": "^0.3.3",
     "strip-ansi": "^6.0.0",
