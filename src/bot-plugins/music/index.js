@@ -119,6 +119,18 @@ function init(client, cm, ap) {
             }
         }
     );
+    cm.push(
+        {
+            "command": "queue",
+            "category": "Music",
+            "desc": "Display the music queue",
+            "handler": async(msg) => {
+                if(musicQueue.length === 0)
+                    return await msg.reply("The queue is empty!");
+                await msg.reply(musicQueue.join("\n"));
+            }
+        }
+    );
 }
 
 module.exports = init;

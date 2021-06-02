@@ -16,7 +16,7 @@ async function startLinux() {
     }
 
     let bios = readfile(__dirname + "/bios/seabios.bin");
-    let linux = readfile(__dirname + "/image/linux4.iso");
+    let linux = readfile(__dirname + "/image/linux.iso");
 
     let boot_start = Date.now();
 
