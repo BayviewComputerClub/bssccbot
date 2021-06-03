@@ -6,6 +6,7 @@ const wiki = require('wikijs').default;
 const truncate = require('truncate');
 const svg2img = require('svg2img');
 const {createUserIfNotExists} = require("../../services/database/database");
+const pjson = require('../../../package.json');
 
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -229,10 +230,10 @@ async function init(client, cm, ap) {
             "category": "Essentials",
             "desc": "Display bot server information",
             "handler": async (msg) => {
-                await msg.channel.send("I am running Node " + process.version + " on " + os.platform() + " " + os.release() + "!");
+                let text = "**BSSCCBot Version " + pjson.version + "**\n";
+                text += "I am running Node " + process.version + " on " + os.platform() + " " + os.release() + "!\n";
                 let sqlVersion = (await pool.request().query("SELECT @@VERSION AS VERSION")).recordset[0].VERSION;
-                console.log(sqlVersion)
-                msg.channel.send(sqlVersion);
+                msg.channel.send(text + sqlVersion);
             }
         }
     );

@@ -51,6 +51,16 @@ async function playSong(search, msg) {
     }
 }
 
+async function stopAllPlayback() {
+    // Clean up and reset.
+    await vc.leave();
+    vc = null;
+    conn = null;
+    dispatcher = null;
+    ytdlStream = null;
+    isPlaying = false;
+}
+
 function init(client, cm, ap) {
     cm.push(
         {
@@ -95,10 +105,8 @@ function init(client, cm, ap) {
                     msg.reply("I am not playing anything!");
                     return;
                 }
-                await vc.leave();
-                vc = null;
+                await stopAllPlayback();
                 await msg.reply("The party's over! :wave:");
-                isPlaying = false;
             }
         }
     );
@@ -108,8 +116,11 @@ function init(client, cm, ap) {
             "category": "Music",
             "desc": "Skip the current song",
             "handler": async(msg) => {
-                if(vc == null) {
-                    msg.reply("I am not playing anything!");
+                if(vc == null)
+                    return msg.reply("I am not playing anything!");
+                if(musicQueue.length === 0) {
+                    await msg.reply("No more songs left in the queue!");
+                    await stopAllPlayback();
                     return;
                 }
                 await msg.reply(":track_next: Skipping the current song...");
@@ -127,7 +138,7 @@ function init(client, cm, ap) {
             "handler": async(msg) => {
                 if(musicQueue.length === 0)
                     return await msg.reply("The queue is empty!");
-                await msg.reply(musicQueue.join("\n"));
+                await msg.reply("\n"+ musicQueue.join("\n- "));
             }
         }
     );
