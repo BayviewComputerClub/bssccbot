@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "gm": "^1.23.1",
     "jimp": "^0.10.0",
-    "jpeg-js": ">=0.4.0",
+    "jpeg-js": ">=0.4.4",
     "libsodium-wrappers": "^0.7.6",
     "lodash": "^4.17.21",
     "mathjax-node": "^2.1.1",
