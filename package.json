@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "dependencies": {
     "8ball": "^1.0.6",
-    "@discordjs/opus": "^0.1.0",
+    "@discordjs/opus": "^0.8.0",
     "axios": "^0.21.1",
     "bufferutil": "^4.0.1",
     "csv-parser": "^2.3.2",
